@@ -1009,7 +1009,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-sync", 1);
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "accurate-seek", 1);
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "soundtouch", 1);
-
+        // 清空DNS,有时因为在APP里面要播放多种类型的视频(如:MP4,直播,直播平台保存的视频,和其他http视频), 有时会造成因为DNS的问题而报10000问题
+        ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_clear", 1);
         if (mAudioDisabled)
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "an", 1);
 
@@ -1025,7 +1026,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user_agent", mUserAgent);
 
         ijkMediaPlayer.setCacheShare(IjkMediaPlayer.FFP_PROP_INT64_SHARE_CACHE_DATA);
-        //ijkMediaPlayer.setLogEnabled(true);
+        // ijkMediaPlayer.setLogEnabled(true);
 
         return ijkMediaPlayer;
     }

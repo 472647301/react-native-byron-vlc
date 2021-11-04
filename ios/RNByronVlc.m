@@ -136,7 +136,6 @@
 {
     if(_player && _player.isPlaying && self.onVideoProgress) {
         int currentTime   = [[_player time] intValue];
-        int remainingTime = [[_player remainingTime] intValue];
         int duration      = [_player.media.length intValue];
         if(!_started) {
             _started = YES;
@@ -151,7 +150,6 @@
             self.onVideoProgress(@{
                                    @"target": self.reactTag,
                                    @"currentTime": [NSNumber numberWithInt:currentTime],
-                                   @"remainingTime": [NSNumber numberWithInt:remainingTime],
                                    @"duration":[NSNumber numberWithInt:duration]
                                    });
         }

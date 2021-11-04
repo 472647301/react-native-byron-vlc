@@ -17,10 +17,6 @@ declare module "react-native-byron-vlc" {
      */
     currentTime: number;
     /**
-     * 剩余时长（毫秒ms单位）
-     */
-    remainingTime: number;
-    /**
      * 总时长（毫秒ms单位）
      */
     duration: number;
@@ -33,13 +29,10 @@ declare module "react-native-byron-vlc" {
     source: Partial<ByronVlcSource> | number;
     muted: boolean;
     volume: number;
-    onLoadStart: (event: { src: Partial<ByronVlcSource> }) => void;
     onLoad: (event: ByronVlcEvent) => void;
-    onBuffer: (event: ByronVlcEvent) => void;
+    onBuffer: () => void;
     onError: () => void;
     onProgress: (event: ByronVlcEvent) => void;
-    onPause: () => void;
-    onStop: () => void;
     onEnd: () => void;
     scaleX: number;
     scaleY: number;
@@ -49,5 +42,7 @@ declare module "react-native-byron-vlc" {
   }
   export default class ByronVlc extends React.Component<
     Partial<ByronVlcProps>
-  > {}
+  > {
+    setNativeProps: ({}: { [key: string]: boolean | number | string }) => void;
+  }
 }

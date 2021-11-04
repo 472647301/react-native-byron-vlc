@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { StyleSheet, requireNativeComponent } from "react-native";
-import { ViewPropTypes, NativeModules } from "react-native";
+import { ViewPropTypes, NativeModules, Platform } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 
 const styles = StyleSheet.create({
@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
 const IJKPlayerModule = NativeModules.RNByronVlcModule || {};
 
 export default class IJKPlayer extends Component {
+  timer = null;
   constructor(props) {
     super(props);
   }
@@ -78,14 +79,31 @@ export default class IJKPlayer extends Component {
   };
 
   _onLoadStart = (event) => {
+    if (Platform.OS === "ios") {
+      this.timer = setTimeout(() => {
+        if (this.props.onError) {
+          this.props.onError();
+        }
+        this.setNativeProps({ paused: true });
+        clearTimeout(this.timer);
+        this.timer = null;
+      }, 20000);
+    }
     if (this.props.onLoadStart) {
       this.props.onLoadStart(event.nativeEvent);
     }
   };
 
   _onLoad = (event) => {
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
     if (IJKPlayerModule.init) {
       IJKPlayerModule.init();
+    }
+    if (Platform.OS === "android") {
+      event.nativeEvent.duration = Math.ceil(event.nativeEvent.duration * 1000);
     }
     if (this.props.onLoad) {
       this.props.onLoad(event.nativeEvent);
@@ -99,8 +117,23 @@ export default class IJKPlayer extends Component {
   };
 
   _onProgress = (event) => {
+    if (Platform.OS === "android") {
+      event.nativeEvent.duration = Math.ceil(event.nativeEvent.duration * 1000);
+      event.nativeEvent.currentTime = Math.ceil(
+        event.nativeEvent.currentTime * 1000
+      );
+    }
     if (this.props.onProgress) {
       this.props.onProgress(event.nativeEvent);
+    }
+    if (Platform.OS === "ios") {
+      const { duration, currentTime } = event.nativeEvent;
+      if (duration - currentTime < 250) {
+        this.setNativeProps({ paused: true });
+        if (this.props.onEnd) {
+          this.props.onEnd(event.nativeEvent);
+        }
+      }
     }
   };
 
