@@ -1,0 +1,41 @@
+{
+  "name": "react-native-byron-vlc",
+  "title": "React Native Byron Vlc",
+  "version": "1.0.0",
+  "description": "React Native Byron Vlc",
+  "main": "index.js",
+  "files": [
+    "README.md",
+    "android",
+    "index.js",
+    "index.d.ts",
+    "ios",
+    "RNByronVlc.podspec"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/github_account/react-native-byron-vlc.git",
+    "baseUrl": "https://github.com/github_account/react-native-byron-vlc"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": {
+    "name": "秃尾巴的猫",
+    "email": "472647301@qq.com"
+  },
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": ">=16.8.1",
+    "react-native": ">=0.60.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "react": "^16.9.0",
+    "react-native": "^0.61.5"
+  }
+}
