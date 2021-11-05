@@ -208,6 +208,16 @@
     }
 }
 
+-(void)setVolume:(int)volume
+{
+    if(_player){
+        VLCAudio *audio = _player.audio;
+        if(interval >= 0){
+            audio.volume = volume;
+        }
+    }
+}
+
 #pragma mark - Lifecycle
 - (void) removeFromSuperview
 {
