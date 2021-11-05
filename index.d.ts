@@ -29,6 +29,7 @@ declare module "react-native-byron-vlc" {
     source: Partial<ByronVlcSource> | number;
     muted: boolean;
     volume: number;
+    paused: boolean;
     onLoad: (event: ByronVlcEvent) => void;
     onBuffer: () => void;
     onError: () => void;
