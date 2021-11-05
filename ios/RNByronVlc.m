@@ -212,7 +212,7 @@
 {
     if(_player){
         VLCAudio *audio = _player.audio;
-        if(interval >= 0){
+        if(volume >= 0){
             audio.volume = volume;
         }
     }

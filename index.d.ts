@@ -25,7 +25,7 @@ declare module "react-native-byron-vlc" {
     src: ByronVlcSource;
     seek: number;
     snapshotPath: string;
-
+    timeout: number;
     source: Partial<ByronVlcSource> | number;
     muted: boolean;
     volume: number;

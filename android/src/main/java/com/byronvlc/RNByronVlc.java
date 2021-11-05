@@ -158,8 +158,8 @@ public class RNByronVlc extends FrameLayout implements LifecycleEventListener, o
                 public void run() {
                     if (mVideoView != null && mVideoView.isPlaying() && !mPaused) {
                         WritableMap event = Arguments.createMap();
-                        event.putDouble(Constants.EVENT_PROP_CURRENT_TIME, mVideoView.getCurrentPosition() / 1000.0);
-                        event.putDouble(Constants.EVENT_PROP_DURATION, mVideoView.getDuration() / 1000.0);
+                        event.putDouble(Constants.EVENT_PROP_CURRENT_TIME, mVideoView.getCurrentPosition());
+                        event.putDouble(Constants.EVENT_PROP_DURATION, mVideoView.getDuration());
                         event.putInt("tcpSpeed", (int) mVideoView.getTcpSpeed());
                         event.putInt("fileSize", (int) mVideoView.getFileSize());
                         mEventEmitter.receiveEvent(getId(), Constants.Events.EVENT_PROGRESS.toString(), event);
@@ -256,7 +256,7 @@ public class RNByronVlc extends FrameLayout implements LifecycleEventListener, o
 
     public void setSeekModifier(final double seekTime, final boolean pauseAfterSeek) {
         if (mVideoView != null)
-            mVideoView.seekTo((int) (seekTime * 1000));
+            mVideoView.seekTo((int) (seekTime * mVideoView.getDuration()));
     }
 
     /**
@@ -692,8 +692,8 @@ public class RNByronVlc extends FrameLayout implements LifecycleEventListener, o
         event.putArray("audioTracks", audioTracks);
         event.putArray("textTracks", textTracks);
 
-        event.putDouble(Constants.EVENT_PROP_DURATION, mVideoView.getDuration() / 1000.0);
-        event.putDouble(Constants.EVENT_PROP_CURRENT_TIME, mVideoView.getCurrentPosition() / 1000.0);
+        event.putDouble(Constants.EVENT_PROP_DURATION, mVideoView.getDuration());
+        event.putDouble(Constants.EVENT_PROP_CURRENT_TIME, mVideoView.getCurrentPosition());
         mEventEmitter.receiveEvent(getId(), Constants.Events.EVENT_LOAD.toString(), event);
         mLoaded = true;
         applyModifiers();

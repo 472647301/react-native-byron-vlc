@@ -87,7 +87,7 @@ export default class IJKPlayer extends Component {
         this.setNativeProps({ paused: true });
         clearTimeout(this.timer);
         this.timer = null;
-      }, 20000);
+      }, this.props.timeout || 30000);
     }
     if (this.props.onLoadStart) {
       this.props.onLoadStart(event.nativeEvent);
@@ -102,9 +102,6 @@ export default class IJKPlayer extends Component {
     if (IJKPlayerModule.init) {
       IJKPlayerModule.init();
     }
-    if (Platform.OS === "android") {
-      event.nativeEvent.duration = Math.ceil(event.nativeEvent.duration * 1000);
-    }
     if (this.props.onLoad) {
       this.props.onLoad(event.nativeEvent);
     }
@@ -117,12 +114,6 @@ export default class IJKPlayer extends Component {
   };
 
   _onProgress = (event) => {
-    if (Platform.OS === "android") {
-      event.nativeEvent.duration = Math.ceil(event.nativeEvent.duration * 1000);
-      event.nativeEvent.currentTime = Math.ceil(
-        event.nativeEvent.currentTime * 1000
-      );
-    }
     if (this.props.onProgress) {
       this.props.onProgress(event.nativeEvent);
     }
