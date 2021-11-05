@@ -34,6 +34,7 @@ declare module "react-native-byron-vlc" {
     onError: () => void;
     onProgress: (event: ByronVlcEvent) => void;
     onEnd: () => void;
+    onPause: (event: { paused: boolean }) => void;
     scaleX: number;
     scaleY: number;
     translateX: number;

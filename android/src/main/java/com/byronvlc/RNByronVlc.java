@@ -241,9 +241,15 @@ public class RNByronVlc extends FrameLayout implements LifecycleEventListener, o
         if (mVideoView == null) return;
         if (mPaused) {
             mVideoView.pause();
+            WritableMap event = Arguments.createMap();
+            event.putBoolean("paused", true);
+            mEventEmitter.receiveEvent(getId(), Constants.Events.EVENT_PAUSE.toString(), event);
         } else {
             mVideoView.start();
             mProgressUpdateHandler.post(mProgressUpdateRunnable);
+            WritableMap event = Arguments.createMap();
+            event.putBoolean("paused", false);
+            mEventEmitter.receiveEvent(getId(), Constants.Events.EVENT_PAUSE.toString(), event);
         }
     }
 

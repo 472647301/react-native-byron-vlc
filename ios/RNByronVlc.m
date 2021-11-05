@@ -67,10 +67,15 @@
 - (void)setPaused:(BOOL)paused
 {
     if(_player) {
-        if (paused)
+        if (paused) {
             [_player pause];
-        else
+            if(self.onVideoPause)
+                self.onVideoPause(@{@"paused": @(1)});
+        } else {
             [_player play];
+            if(self.onVideoPause)
+                self.onVideoPause(@{@"paused": @(0)});
+        }
     }
     _paused = paused;
 }
