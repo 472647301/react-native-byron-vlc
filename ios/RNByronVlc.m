@@ -12,7 +12,6 @@
     VLCMediaPlayer *_player;
 
     BOOL _paused;
-    BOOL _muted;
     BOOL _started;
 }
 
@@ -22,7 +21,6 @@
         _eventDispatcher = eventDispatcher;
 
         _paused = NO;
-        _muted = NO;
         _started = NO;
 
         NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
@@ -55,12 +53,6 @@
 
 - (void)applyModifiers
 {
-    if(_player) {
-        if (_muted)
-            [[_player audio] setMuted:NO];
-        else
-            [[_player audio] setMuted:YES];
-    }
     [self setPaused:_paused];
 }
 
@@ -78,12 +70,6 @@
         }
     }
     _paused = paused;
-}
-
-- (void)setMuted:(BOOL)muted
-{
-    _muted = muted;
-    [self applyModifiers];
 }
 
 -(void)setSrc:(NSDictionary *)source
