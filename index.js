@@ -19,7 +19,7 @@ export default class IJKPlayer extends Component {
   }
 
   setNativeProps(nativeProps) {
-    this._root.setNativeProps(nativeProps);
+    this._root?.setNativeProps(nativeProps);
   }
 
   seek = (time, pauseAfterSeek) => {
