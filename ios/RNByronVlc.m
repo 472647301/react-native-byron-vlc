@@ -40,10 +40,9 @@
 
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
-    if (_paused)
-        return;
-    if(_player && _player.isPlaying)
-        [_player pause];
+    if(_player && !_paused) {
+        [_player play];
+    }
 }
 
 - (void)applicationWillEnterForeground:(NSNotification *)notification
@@ -53,7 +52,9 @@
 
 - (void)applyModifiers
 {
-    [self setPaused:_paused];
+    if(_player && !_paused) {
+        [_player play];
+    }
 }
 
 - (void)setPaused:(BOOL)paused
@@ -128,6 +129,12 @@
     if(_player && _player.isPlaying && self.onVideoProgress) {
         int currentTime   = [[_player time] intValue];
         int duration      = [_player.media.length intValue];
+        int remainingTime = [[_player remainingTime] intValue];
+        NSLog(@"remainingTime %i", remainingTime);
+        if (remainingTime < 0 && remainingTime > -500) {
+            if(self.onVideoEnd)
+                self.onVideoEnd(@{ @"target": self.reactTag });
+        }
         if(!_started) {
             _started = YES;
             if(self.onVideoLoad)
